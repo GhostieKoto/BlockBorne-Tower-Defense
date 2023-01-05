@@ -154,17 +154,19 @@ tower.slow = {
             color: [102, 204, 26],
             radius: 0.9,
             // Misc
-            name: 'poison',
-            title: 'Poison Tower',
+            name: 'slow',
+            title: 'Frost Tower',
             // Stats
-            cooldownMax: 60,
-            cooldownMin: 60,
-            cost: 150,
-            range: 2,
-            type: 'poison',
+            cooldownMax: 0,
+            cooldownMin: 0,
+            cost: 100,
+            damageMax: 0,
+            damageMin: 0,
+            range: 5,
+            type: 'slow',
             // Methods
             onHit: function(e) {
-                e.applyEffect('poison', 60);
+                e.applyEffect('slow', 60);
             }
         }
     ]
@@ -180,14 +182,14 @@ tower.sniper = {
     // Misc
     name: 'sniper',
     sound: 'sniper',
-    title: 'Sniper Tower',
+    title: 'Bolt-Action Sniper Tower',
     // Stats
-    cooldownMax: 100,
-    cooldownMin: 60,
+    cooldownMax: 25,
+    cooldownMin: 15,
     cost: 150,
     damageMax: 100,
     damageMin: 100,
-    range: 9,
+    range: 999,
     // Methods
     drawBarrel: function() {
         stroke(0);
@@ -196,7 +198,7 @@ tower.sniper = {
         var back = -height / 3;
         var front = height * 2 / 3;
         var side = this.radius * ts / 2;
-        rect(back, -side, back, side, front, 0);
+        triangle(back, -side, back, side, front, 0);
     },
     target(entities) {
         if (stopFiring) return;
@@ -223,13 +225,13 @@ tower.sniper = {
             // Misc
             name: 'railgun',
             sound: 'railgun',
-            title: 'Railgun',
+            title: 'Heavy Sniper Tower',
             // Stats
-            cooldownMax: 120,
-            cooldownMin: 100,
+            cooldownMax: 150,
+            cooldownMin: 75,
             cost: 300,
-            damageMax: 200,
-            damageMin: 200,
+            damageMax: 1000,
+            damageMin: 500,
             range: 11,
             type: 'piercing',
             // Methods
@@ -243,18 +245,6 @@ tower.sniper = {
                 ellipse(0, 0, this.radius * ts * 2 / 3, this.radius * ts * 2 / 3);
             },
             onHit: function(e) {
-                var blastRadius = 1;
-                var inRadius = getInRange(e.pos.x, e.pos.y, blastRadius, enemies);
-                noStroke();
-                fill(this.color[0], this.color[1], this.color[2], 127);
-                ellipse(e.pos.x, e.pos.y, ts * 2.5, ts * 2.5);
-                if (showEffects) {
-                    var s = new ShrapnelExplosion(e.pos.x, e.pos.y);
-                    for (var i = 0; i < particleAmt; i++) {
-                        s.addParticle();
-                    }
-                    systems.push(s);
-                }
                 for (var i = 0; i < inRadius.length; i++) {
                     var h = inRadius[i];
                     var amt = round(random(this.damageMin, this.damageMax));
@@ -283,8 +273,8 @@ tower.rocket = {
     cooldownMin: 60,
     cost: 250,
     range: 7,
-    damageMax: 60,
-    damageMin: 40,
+    damageMax: 600,
+    damageMin: 400,
     type: 'explosion',
     // Methods
     drawBarrel: function() {
@@ -332,11 +322,11 @@ tower.rocket = {
             sound: 'missile',
             title: 'Missile Silo',
             // Stats
-            cooldownMax: 80,
-            cooldownMin: 40,
+            cooldownMax: 40,
+            cooldownMin: 4,
             cost: 250,
-            damageMax: 120,
-            damageMin: 100,
+            damageMax: 1200,
+            damageMin: 600,
             range: 9,
             // Methods
             drawBarrel: function() {
@@ -392,11 +382,11 @@ tower.bomb = {
     name: 'bomb',
     title: 'Bomb Tower',
     // Stats
-    cooldownMax: 60,
-    cooldownMin: 40,
-    cost: 250,
-    damageMax: 60,
-    damageMin: 20,
+    cooldownMax: 25,
+    cooldownMin: 0,
+    cost: 1250,
+    damageMax: 600,
+    damageMin: 200,
     range: 2,
     type: 'explosion',
     // Methods
@@ -434,10 +424,10 @@ tower.bomb = {
             name: 'clusterBomb',
             title: 'Cluster Bomb',
             // Stats
-            cooldownMax: 80,
-            cooldownMin: 40,
-            cost: 250,
-            damageMax: 140,
+            cooldownMax: 40,
+            cooldownMin: 4,
+            cost: 5250,
+            damageMax: 400,
             damageMin: 100,
             // Methods
             drawBarrel: function() {
@@ -588,7 +578,7 @@ tower.tesla = {
                     sounds[this.sound].play();
                 }
                 while (dmg > 1) {
-                    weight -= 1;
+                    weight -= 0.01;
                     last.dealDamage(dmg, this.type);
                     targets.push(last);
                     var next = getNearest(enemies, last.pos, targets);
@@ -599,7 +589,6 @@ tower.tesla = {
                     line(last.pos.x, last.pos.y, x, y);
                     line(x, y, next.pos.x, next.pos.y);
                     last = next;
-                    dmg /= 2;
                 }
                 strokeWeight(1);
             },
