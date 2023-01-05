@@ -196,7 +196,7 @@ tower.sniper = {
         var back = -height / 3;
         var front = height * 2 / 3;
         var side = this.radius * ts / 2;
-        triangle(back, -side, back, side, front, 0);
+        rect(back, -side, back, side, front, 0);
     },
     target(entities) {
         if (stopFiring) return;
