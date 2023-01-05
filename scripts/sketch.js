@@ -12,7 +12,7 @@ var tileZoom = 2;
 var ts = 24;            // tile size
 var zoomDefault = ts;
 
-var particleAmt = 32;   // number of particles to draw per explosion
+var particleAmt = 3;   // number of particles to draw per explosion
 
 var tempSpawnCount = 40;
 
@@ -51,14 +51,14 @@ var sounds;             // dict of all sounds
 var boomSound;          // explosion sound effect
 
 // TODO add more functionality to god mode
-var godMode = false;    // make player immortal for test purposes
+var godMode = true;    // make player immortal for test purposes
 var healthBar = true;   // display enemy health bar
 var muteSounds = false; // whether to mute sounds
 var paused;             // whether to update or not
 var randomWaves = true; // whether to do random or custom waves
 var scd;                // number of ticks until next spawn cycle
 var showEffects = true; // whether or not to display particle effects
-var showFPS = false;    // whether or not to display FPS
+var showFPS = true;    // whether or not to display FPS
 var skipToNext = false; // whether or not to immediately start next wave
 var stopFiring = false; // whether or not to pause towers firing
 var toCooldown;         // flag to reset spawning cooldown
